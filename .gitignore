@@ -1,0 +1,8 @@
+gulosity_env
+db.sqlite3
+*.pyc
+*.swn
+*.swo
+*.swp
+.tmp
+dev.py
