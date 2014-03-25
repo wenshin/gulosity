@@ -1,10 +1,9 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 
-from gulosity.main.models import RealUser
+from gulosity.apps.accounts.models import RealUser
 
 from models import Restaurant
-from forms import RestaurantFrom
 
 
 def index(request, restaurant_name=None):

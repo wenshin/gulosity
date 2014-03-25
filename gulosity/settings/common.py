@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'gulosity.apps.main',
     'gulosity.apps.restaurant',
+    'gulosity.apps.accounts',
     'gulosity.libs',
 )
 

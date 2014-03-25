@@ -3,7 +3,8 @@
 
 from django.db import models
 from django.contrib import admin
-from gulosity.apps.main.models import RealUser
+
+from gulosity.apps.accounts.models import RealUser
 from gulosity.libs.models import Model
 
 
