@@ -7,3 +7,6 @@ db.sqlite3
 .tmp
 dev.py
 .idea
+*.log
+*.pot
+local_settings.py
