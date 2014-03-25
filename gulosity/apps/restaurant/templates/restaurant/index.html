@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block body %}
+  <ul>
+    {% for restaurant in restaurants %}
+    <li>{{ restaurant.name }}</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

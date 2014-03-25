@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block body %}
+  <div>
+    <form action="" method="post">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+      <div class="fieldWrapper">
+        {{ form.name.errors }}
+        <label for="id_name">饭店名：</label>
+        {{ form.name }}
+      </div>
+      <p><input type="submit" value="新增" /></p>
+    </form>
+  </div>
+{% endblock %}

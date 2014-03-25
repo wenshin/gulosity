@@ -38,6 +38,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'gulosity.apps.main',
+    'gulosity.apps.restaurant',
+    'gulosity.libs',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -101,3 +103,5 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
 )
+
+LOGIN_REDIRECT_URL = '/'

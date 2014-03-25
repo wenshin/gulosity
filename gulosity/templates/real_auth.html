@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block body %}
+  <div>
+    <form action="" method="post">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+      {{ form }}
+      <p><input type="submit" value="提交认证信息" /></p>
+    </form>
+  </div>
+{% endblock %}
