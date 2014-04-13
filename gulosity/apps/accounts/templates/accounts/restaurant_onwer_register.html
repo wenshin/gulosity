@@ -1,0 +1,13 @@
+{% extends 'accounts/register.html' %}
+
+
+{% block owner_block %}
+<div>
+  <form action="" method="post">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    {{ form }}
+    <p><input type="submit" value="新增" /></p>
+  </form>
+</div>
+{% endblock %}

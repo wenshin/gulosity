@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div>Welcome to User index</div>
+<a href="{% url 'restaurant-new' %}">Add new restaurant</a>
+<h2>My restaurants</h2>
+<ul>
+{% for res in my_restaurants %}
+<li><a href="{% url 'restaurant-page' res.slug %}">{{ res.name }}</a></li>
+{% endfor %}
+</ul>
+{% endblock %}

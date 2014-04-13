@@ -1,8 +1,8 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import patterns, url
 
 
 urlpatterns = patterns('gulosity.apps.restaurant.views',
     url(r'^$', 'index', name='restaurant-index'),
-    url(r'^(?P<restaurant_name>[a-zA-Z\-])/?', 'index', name='restaurant'),
-    url(r'^add/?$', 'add', name='restaurant-add'),
+    url(r'^/?new/?$', 'new', name='restaurant-new'),
+    url(r'^name/(?P<slug>[a-zA-Z0-9\-]{1,50})/?', 'page', name='restaurant-page'),
 )

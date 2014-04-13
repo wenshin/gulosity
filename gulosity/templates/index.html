@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 
 {% block body %}
-  <div>username:{{ user.username }}</div>
+<div>Welcome to Gulosity</div>
+<a href="{% url 'restaurant-index' %}">All Restaurants</a>
 {% endblock %}

@@ -1,3 +1,5 @@
+{% load static %}
+
 <!doctype html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie8"> <![endif]-->
@@ -12,10 +14,20 @@
     {% block headcss %}
     {% endblock %}
 
+    <script type="text/javascript"
+            src="{% static 'bower_components/modernizr/modernizr.js' %}"></script>
+
     {% block headjs %}
     {% endblock %}
   </head>
   <body>
+    {% if user.is_authenticated %}
+      User: {{ user.username }}
+      <a href="{% url 'logout' %}">Logout</a>
+    {% else %}
+      <a href="{% url 'login' %}">Login</a>
+      <a href="{% url 'register' %}">Register</a>
+    {% endif %}
     {% block body %}
     {% endblock %}
 

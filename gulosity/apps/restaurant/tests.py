@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
 
-from models import RealUser
+from models import UserPrivacy
 
 
 class TestAddRestaurant(TestCase):
@@ -15,5 +15,5 @@ class TestAddRestaurant(TestCase):
 
     def test_real_user(self):
         identity = '123456789012343456'
-        ru = RealUser(user=self.user, identity=identity)
-        ru.save()
+        p = UserPrivacy(user=self.user, identity=identity)
+        p.save()

@@ -1,4 +1,5 @@
-gulosity_env
+bower_components
+gulosityenv
 db.sqlite3
 *.pyc
 *.swn

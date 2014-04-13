@@ -1,4 +1,9 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block headjs %}
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=3WBTlCOVP4hVHb3kGOwcc5fM"></script>
+{% endblock %}
 
 {% block body %}
   <div>
@@ -20,7 +25,135 @@
         <label for="id_password2">重复密码：</label>
         {{ form.password2 }}
       </div>
+      <input id="position-lng-input" type="text" name="lng" hidden>
+      <input id="position-lat-input" type="text" name="lat" hidden>
       <p><input type="submit" value="注册" /></p>
     </form>
   </div>
+    <div>
+    <h2>选择常用位置</h2>
+    <input id='position-address' type="text" placeholder="输入您的地址" style="width: 400px;">
+    <button id="search-position">搜索</button>
+    <div style="width:50%;height:500px;border:1px solid gray" id="map-container"></div>
+  </div>
+
+  {% block owner_block %}
+  {% endblock %}
+
+{% endblock %}
+
+{% block footjs %}
+<script type="text/javascript"
+        src="{% static 'bower_components/jquery/dist/jquery.min.js' %}"></script>
+
+<script type="text/javascript">
+// 百度地图API功能
+var map = new BMap.Map("map-container");
+var $addr = $('#position-address');
+var $lng = $('#position-lng-input');
+var $lat = $('#position-lat-input');
+var myGeo = new BMap.Geocoder();
+
+var PositionMarker = {
+  markers: [],
+  create: function(point) {
+    var mk = new BMap.Marker(point, {
+      enableDragging: true,
+      raiseOnDrag: true,
+      draggingCursor: 'move'
+    });
+    mk.addEventListener("dblclick", function(e) {
+      map.removeOverlay(mk);
+      clearGeoValue();
+      e.domEvent.stopPropagation();
+    });
+
+    mk.addEventListener("click", function(e) {
+      e.domEvent.stopPropagation();
+    });
+    mk.addEventListener('dragend', function(e){
+      clearGeoValue(e.point);
+      setGeoValue(e.point);
+    });
+    this.markers.push(mk);
+    return mk;
+  },
+  removeAll: function() {
+    this.markers.forEach(function(marker, i) {
+      map.removeOverlay(marker);
+    });
+  }
+};
+
+var setGeoValue = function(point) {
+  myGeo.getLocation(point, function(r){
+    var addComp = r.addressComponents;
+    $addr.val(addComp.province + ", " + addComp.city + ", " +
+      addComp.district + ", " + addComp.street + ", " + addComp.streetNumber);
+  });
+  $lng.val(point.lng);
+  $lat.val(point.lat);
+};
+
+var clearGeoValue = function(point) {
+  $addr.val('');
+  $lng.val('');
+  $lat.val('');
+};
+
+var myCity = new BMap.LocalCity();
+myCity.get(function(r) {
+  map.centerAndZoom(r.center,r.level);
+  map.setCenter(r.name);
+  map.addControl(new BMap.NavigationControl());  //添加默认缩放平移控件
+  map.enableScrollWheelZoom();    //启用滚轮放大缩小，默认禁用
+  map.enableContinuousZoom();    //启用地图惯性拖拽，默认禁用
+
+  //单击获得经纬度
+  map.addEventListener("click",function(e){
+    PositionMarker.removeAll();
+    var mk = PositionMarker.create(e.point);
+    map.addOverlay(mk);
+    map.panTo(e.point);
+    setGeoValue(e.point);
+  });
+
+  $('#search-position').click(function (e) {
+    // 将地址解析结果显示在地图上,并调整地图视野
+    myGeo.getPoint($addr.val(), function(point){
+      if (point) {
+        map.centerAndZoom(point, 16);
+        PositionMarker.removeAll();
+        map.addOverlay(PositionMarker.create(point));
+      }
+    });
+    e.stopPropagation();
+  });
+});
+
+
+// var geolocation = new BMap.Geolocation();
+// geolocation.getCurrentPosition(function(r){
+//     if(this.getStatus() == BMAP_STATUS_SUCCESS){
+//         var mk = new BMap.Marker(r.point);
+//         map.addOverlay(mk);
+//         map.panTo(r.point);
+//         alert('您的位置：'+r.point.lng+','+r.point.lat);
+//     }
+//     else {
+//         alert('failed'+this.getStatus());
+//     }
+// },{enableHighAccuracy: true});
+
+//关于状态码
+//BMAP_STATUS_SUCCESS 检索成功。对应数值“0”。
+//BMAP_STATUS_CITY_LIST 城市列表。对应数值“1”。
+//BMAP_STATUS_UNKNOWN_LOCATION  位置结果未知。对应数值“2”。
+//BMAP_STATUS_UNKNOWN_ROUTE 导航结果未知。对应数值“3”。
+//BMAP_STATUS_INVALID_KEY 非法密钥。对应数值“4”。
+//BMAP_STATUS_INVALID_REQUEST 非法请求。对应数值“5”。
+//BMAP_STATUS_PERMISSION_DENIED 没有权限。对应数值“6”。(自 1.1 新增)
+//BMAP_STATUS_SERVICE_UNAVAILABLE 服务不可用。对应数值“7”。(自 1.1 新增)
+//BMAP_STATUS_TIMEOUT 超时。对应数值“8”。(自 1.1 新增)
+</script>
 {% endblock %}

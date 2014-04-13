@@ -11,7 +11,7 @@ urlpatterns = patterns('gulosity.apps.main.views',
 
 
 urlpatterns += patterns('',
-    url(r'^restaurant/', include('gulosity.apps.restaurant.urls')),
+    url(r'^r/', include('gulosity.apps.restaurant.urls')),
     url(r'^accounts/', include('gulosity.apps.accounts.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )

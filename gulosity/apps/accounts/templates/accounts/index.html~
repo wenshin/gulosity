@@ -1,7 +1,0 @@
-{% extends 'base.html' %}
-
-{% block body %}
-  <div>
-     {{ request.user.username }}
-  </div>
-{% endblock %}
